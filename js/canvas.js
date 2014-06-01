@@ -1,10 +1,6 @@
 function Canvas(elem) {
   this.elem = elem;
-  if (this.elem.hasOwnProperty('getContext')) {
-    this.ctx = this.elem.getContext('2d');
-  } else {
-    this.ctx = this.elem;
-  }
+  this.ctx = this.elem.getContext('2d');
 
   //this.width = elem.width;
   //this.height = elem.height;

@@ -17,11 +17,7 @@ module.exports = _dereq_('./js/isomer');
 },{"./js/isomer":4}],2:[function(_dereq_,module,exports){
 function Canvas(elem) {
   this.elem = elem;
-  if (this.elem.hasOwnProperty('getContext')) {
-    this.ctx = this.elem.getContext('2d');
-  } else {
-    this.ctx = this.elem;
-  }
+  this.ctx = this.elem.getContext('2d');
 
   //this.width = elem.width;
   //this.height = elem.height;
@@ -187,6 +183,38 @@ var Point = _dereq_('./point');
 var Shape = _dereq_('./shape');
 var Vector = _dereq_('./vector');
 
+function Pixi(graphics) {
+  this.ctx = graphics;
+  this.width = graphics.width;
+  this.height = graphics.height;
+}
+Pixi.prototype.clear = function() {
+  this.ctx.clear();
+}
+
+Pixi.prototype.path = function (points, color) {
+  //this.ctx.beginPath();
+  this.ctx.beginFill(color.toHex(), color.a);
+  this.ctx.moveTo(points[0].x, points[0].y);
+
+  for (var i = 1; i < points.length; i++) {
+    this.ctx.lineTo(points[i].x, points[i].y);
+  }
+
+  //this.ctx.closePath();
+  this.ctx.endFill();
+
+  /* Set the strokeStyle and fillStyle
+  this.ctx.save()
+
+  this.ctx.globalAlpha = color.a;
+  this.ctx.fillStyle = this.ctx.strokeStyle = color.toHex();
+  this.ctx.stroke();
+  this.ctx.fill();
+  this.ctx.restore();
+  */
+};
+
 
 /**
  * The Isomer class
@@ -196,7 +224,11 @@ var Vector = _dereq_('./vector');
 function Isomer(canvasId, options) {
   options = options || {};
 
-  this.canvas = new Canvas(canvasId);
+  if (canvasId.hasOwnProperty('getContext')) {
+    this.canvas = new Canvas(canvasId);
+  } else {
+    this.canvas = new Canvas(canvasId);
+  }
   this.angle = Math.PI / 6;
 
   this.scale = options.scale || 70;
