@@ -227,7 +227,7 @@ function Isomer(canvasId, options) {
   if (canvasId.hasOwnProperty('getContext')) {
     this.canvas = new Canvas(canvasId);
   } else {
-    this.canvas = new Canvas(canvasId);
+    this.canvas = new Pixi(canvasId);
   }
   this.angle = Math.PI / 6;
 
