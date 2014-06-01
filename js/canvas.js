@@ -1,9 +1,13 @@
 function Canvas(elem) {
   this.elem = elem;
-  this.ctx = this.elem.getContext('2d');
+  if (this.elem.hasOwnProperty('getContext')) {
+    this.ctx = this.elem.getContext('2d');
+  } else {
+    this.ctx = this.elem;
+  }
 
-  this.width = elem.width;
-  this.height = elem.height;
+  //this.width = elem.width;
+  //this.height = elem.height;
 }
 
 Canvas.prototype.clear = function () {
