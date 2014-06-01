@@ -194,7 +194,8 @@ Pixi.prototype.clear = function() {
 
 Pixi.prototype.path = function (points, color) {
   //this.ctx.beginPath();
-  this.ctx.beginFill(color.toHex(), color.a);
+  var c = color.r * 256 * 256 + color.g * 256 + color.b
+  this.ctx.beginFill(c, color.a);
   this.ctx.moveTo(points[0].x, points[0].y);
 
   for (var i = 1; i < points.length; i++) {
